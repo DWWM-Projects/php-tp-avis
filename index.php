@@ -25,10 +25,12 @@
 
                 <div class="w-1/3 flex flex-column text-center"> <!-- Avis -->
                     <p>3.3 / 5</p>
+                    <span>@todo stars</span>
+                    <p>4 avis</p>
                 </div>
 
                 <div class="w-1/3 flex-flex-column text-center"> <!-- Div barres avis -->
-                    <span>@todo stars</span>
+                    <span>@todo barres avis</span>
                 </div>
                 
                 <div class="w-1/3 flex-flex-column text-center"> <!-- Div notation -->
@@ -69,6 +71,37 @@
             </form>
 
         </div> <!-- Fin Div formulaire -->
+
+        <div class="w-full"> <!-- Div commentaires -->
+
+            <div> <!-- Div encadré commentaire -->
+
+                <div> <!-- Partie Avatar -->
+                    <span>@todo avatar</span>
+                </div>
+
+                <div> <!-- Partie commentaire -->
+
+                    <div> <!-- utilisateur -->
+                        <p>Matthieu Mota</p>
+                    </div>
+
+                    <div> <!-- Avis -->
+                        <span></span>
+                        <p>Très bon restaurant</p>
+                    </div>
+
+                    <div> <!-- Date -->
+
+                    </div>
+
+                </div> <!-- Fin partie commentaire -->
+
+            </div> <!-- Fin div encadré -->
+
+
+        </div> <!-- Fin div commentaire -->
+
 
     </div> <!-- container -->
     
