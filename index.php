@@ -11,33 +11,42 @@
 
         require 'config/db.php';
 
+        // setlocale(LC_TIME, 'fr_FR');
         date_default_timezone_set('Europe/Paris');
+        // $formatter = IntlDateFormatter::create('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::FULL);
+        // $formatter->setPattern('cccc dd MMMM Y');
 
         $users = [
             [
-                'name' => 'Fiorella Mota',
+                'name' => $db->query('SELECT * FROM review WHERE ')
                 'rate' => 5,
                 'comment' => 'Très bon restaurant',
                 'date' => '2022-02-09 11:43:12',
             ],
-            [
-                'name' => 'Marina Mota',
-                'rate' => 4,
-                'comment' => 'Super restaurant',
-                'date' => '2022-02-04 08:12:12',
-            ],
-            [
-                'name' => 'Matthieu Mota',
-                'rate' => 3,
-                'comment' => 'Mauvais restaurant',
-                'date' => '2022-02-06 06:23:12',
-            ],
-            [
-                'name' => 'Sam Double',
-                'rate' => 4,
-                'comment' => 'Plutôt bon',
-                'date' => '2022-05-21 21:54:12',
-            ],
+            // [
+            //     'name' => 'Fiorella Mota',
+            //     'rate' => 5,
+            //     'comment' => 'Très bon restaurant',
+            //     'date' => '2022-02-09 11:43:12',
+            // ],
+            // [
+            //     'name' => 'Marina Mota',
+            //     'rate' => 4,
+            //     'comment' => 'Super restaurant',
+            //     'date' => '2022-02-04 08:12:12',
+            // ],
+            // [
+            //     'name' => 'Matthieu Mota',
+            //     'rate' => 3,
+            //     'comment' => 'Mauvais restaurant',
+            //     'date' => '2022-02-06 06:23:12',
+            // ],
+            // [
+            //     'name' => 'Sam Double',
+            //     'rate' => 4,
+            //     'comment' => 'Plutôt bon',
+            //     'date' => '2022-05-21 21:54:12',
+            // ],
         ];
 
         $rateSum = 0;
@@ -63,6 +72,9 @@
         $name = toClean($_POST['name'] ?? null);
         $rate = toClean($_POST['rate'] ?? null);
         $comment = toClean($_POST['comment'] ?? null);
+        $date = date('l d M Y').' à '.date('H \h i');
+
+        // $date = date('l d M Y').' à '.date('H \h i');
         // $date = toClean($_POST['date']) ?? null;
 
         $errors = [];
@@ -88,13 +100,14 @@
         if (empty($errors)) {
             $success = true;
 
-            $query = $db->prepare('INSERT INTO review (name, rate, review)
-            VALUES (:name, :rate, :comment)');
+            $query = $db->prepare('INSERT INTO review (name, rate, review, created_at)
+            VALUES (:name, :rate, :comment, :date)');
         
             $query->execute([
                 ':name' => $name,
                 ':rate' => $rate,
                 ':comment' => $comment,
+                'date' => $date,
             ]);
         }
 
@@ -200,6 +213,19 @@
                     <button class="bg-blue-400 hover:bg-blue-200 duration-300 text-center text-white rounded p-2">Noter</button>
                 </div>
 
+                <!-- <?php if (!empty($errors)) { ?>
+                    <div class="my-3">
+                        
+                            <?php foreach ($errors as $error) { ?>
+                                <ul>
+                                    <li><?= $error; ?></li>
+                                </ul>
+                            <?php } ?>
+                        
+                    </div>
+                <?php } ?> -->
+                   
+
             </form>
 
         </div> <!-- Fin Div formulaire -->
@@ -251,7 +277,6 @@
                         
                         <div class="w-full bg-gray-100 border-b p-2 flex justify-end"> <!-- Date -->
                             <?php 
-                                // $date = date('l d M Y').' à '.date('H \h i');
                                 echo $user['date'];
                             ?>
                         </div>                   
