@@ -9,6 +9,8 @@
 <body class="w-full">
     <?php
 
+        require 'config/db.php';
+
         date_default_timezone_set('Europe/Paris');
 
         $users = [
@@ -51,6 +53,52 @@
 
         $rateAverage = $rateSum / $divisor;   
         $review = $index + 1; 
+
+        function toClean($value) {
+            return trim(htmlspecialchars($value));
+        }
+
+        $query = $db->query('SELECT * FROM review')->fetchall();
+
+        $name = toClean($_POST['name'] ?? null);
+        $rate = toClean($_POST['rate'] ?? null);
+        $comment = toClean($_POST['comment'] ?? null);
+        // $date = toClean($_POST['date']) ?? null;
+
+        $errors = [];
+        $success = false;
+
+        if (!empty($_POST)) {
+
+            if (empty($name)) {
+                $errors = 'Veuillez entrer un nom svp.';
+            }
+
+            if (empty($rate)) {
+                $errors = 'Veuillez entrer une note svp.';
+            }
+
+            if (empty($comment)) {
+                $errors = 'Entrez un avis svp.';
+            }
+
+            $success = true;
+        }
+
+        if (empty($errors)) {
+            $success = true;
+
+            $query = $db->prepare('INSERT INTO review (name, rate, review)
+            VALUES (:name, :rate, :comment)');
+        
+            $query->execute([
+                ':name' => $name,
+                ':rate' => $rate,
+                ':comment' => $comment,
+            ]);
+        }
+
+
         
     ?>
 
