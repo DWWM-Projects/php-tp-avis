@@ -17,48 +17,80 @@
         // $formatter->setPattern('cccc dd MMMM Y');
 
         $users = [
+            // [
+            //     'name' => $db->query('SELECT * FROM review WHERE name'),
+            //     'rate' => $db->query('SELECT * FROM review WHERE rate'),
+            //     'comment' => $db->query('SELECT * FROM review WHERE review')
+            //     'date' => => $db->query('SELECT * FROM review WHERE created_at')
+            // ],
             [
-                'name' => $db->query('SELECT * FROM review WHERE ')
+                'name' => 'Fiorella Mota',
                 'rate' => 5,
                 'comment' => 'Très bon restaurant',
                 'date' => '2022-02-09 11:43:12',
             ],
-            // [
-            //     'name' => 'Fiorella Mota',
-            //     'rate' => 5,
-            //     'comment' => 'Très bon restaurant',
-            //     'date' => '2022-02-09 11:43:12',
-            // ],
-            // [
-            //     'name' => 'Marina Mota',
-            //     'rate' => 4,
-            //     'comment' => 'Super restaurant',
-            //     'date' => '2022-02-04 08:12:12',
-            // ],
-            // [
-            //     'name' => 'Matthieu Mota',
-            //     'rate' => 3,
-            //     'comment' => 'Mauvais restaurant',
-            //     'date' => '2022-02-06 06:23:12',
-            // ],
-            // [
-            //     'name' => 'Sam Double',
-            //     'rate' => 4,
-            //     'comment' => 'Plutôt bon',
-            //     'date' => '2022-05-21 21:54:12',
-            // ],
+            [
+                'name' => 'Marina Mota',
+                'rate' => 4,
+                'comment' => 'Super restaurant',
+                'date' => '2022-02-04 08:12:12',
+            ],
+            [
+                'name' => 'Matthieu Mota',
+                'rate' => 3,
+                'comment' => 'Mauvais restaurant',
+                'date' => '2022-02-06 06:23:12',
+            ],
+            [
+                'name' => 'Sam Double',
+                'rate' => 4,
+                'comment' => 'Plutôt bon',
+                'date' => '2022-05-21 21:54:12',
+            ],
         ];
 
         $rateSum = 0;
         $divisor = 0;
 
+        $rateFive = 0;
+        $rateFour = 0;
+        $rateThree = 0;
+        $rateTwo = 0;
+        $rateOne = 0;
+
         foreach ($users as $index => $user) {
             $rateSum += $user['rate'];            
         };
 
+        foreach ($users as $index => $user) {
+            if ($user['rate'] == 5) {
+                $rateFive ++;
+            }
+            if ($user['rate'] == 4) {
+                $rateFour ++;
+            }
+            if ($user['rate'] == 3) {
+                $rateThree ++;
+            }
+            if ($user['rate'] == 2) {
+                $rateTwo ++;
+            }
+            if ($user['rate'] == 1) {
+                $rateOne ++;
+            }
+        }
+
+
+
         for ($i = 0; $i <= $index; $i++) {
             $divisor = $index + 1;
         };
+
+        $rateFivePercentage = ($rateFive * 100) / $divisor;
+        $rateFourPercentage = ($rateFour * 100) / $divisor;
+        $rateThreePercentage = ($rateThree * 100) / $divisor;
+        $rateTwoPercentage = ($rateTwo * 100) / $divisor;
+        $rateOnePercentage = ($rateOne * 100) / $divisor;
 
         $rateAverage = $rateSum / $divisor;   
         $review = $index + 1; 
@@ -112,7 +144,7 @@
         }
 
 
-        
+        // commit
     ?>
 
     <div class="contains w-4/5 mx-auto"> <!-- Container -->
@@ -153,21 +185,56 @@
                     <p class="text-3xl text bold"><?= $review ?> avis</p>
                 </div>
 
-                <div class="w-1/3 flex-flex-col  items-center text-center my-3"> <!-- Div barres avis -->
-                    <div class="flex flex-row">
-                        <span class="text-xl">5</span><img class="h-7 w-7" src="img/stars.svg">
+                <div class="w-1/3 flex-flex-col justify-center items-center text-center my-3"> <!-- Div barres avis -->
+                    <div class="flex flex-row items-center">
+                        <span class="text-2xl">5</span>
+                        <svg class="h-9 w-9 ml-2" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="yellow">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <div class="h-7 w-64 ml-2 bg-gray-200 rounded-lg overflow-hidden">
+                            <div class="h-7 bg-yellow-500" style="width:<?= $rateFivePercentage.'%'; ?>"></div>
+                        </div>
+                        <span class="ml-2 text-2xl">(<?=  $rateFive ; ?>)</span>
                     </div>
-                    <div class="flex flex-row">
-                        <span class="text-xl">4</span><img class="h-7 w-7" src="img/stars.svg">
+                    <div class="flex flex-row items-center">
+                        <span class="text-2xl">4</span>
+                        <svg class="h-9 w-9 ml-2" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="yellow"2>
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <div class="h-7 w-64 ml-2 bg-gray-200 rounded-lg overflow-hidden">
+                            <div class="h-7 bg-yellow-500" style="width:<?= $rateFourPercentage.'%'; ?>"></div>
+                        </div>
+                        <span class="ml-2 text-2xl">(<?=  $rateFour ; ?>)</span>
                     </div>
-                    <div class="flex flex-row">
-                        <span class="text-xl">3</span><img class="h-7 w-7" src="img/stars.svg">
+                    <div class="flex flex-row items-center">
+                        <span class="text-2xl">3</span>
+                        <svg class="h-9 w-9 ml-2" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="yellow"2>
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <div class="h-7 w-64 ml-2 bg-gray-200 rounded-lg overflow-hidden">
+                            <div class="h-7 bg-yellow-500" style="width:<?= $rateThreePercentage.'%'; ?>"></div>
+                        </div>
+                        <span class="ml-2 text-2xl">(<?=  $rateThree ; ?>)</span>
                     </div>
-                    <div class="flex flex-row">
-                        <span class="text-xl">2</span><img class="h-7 w-7" src="img/stars.svg">
+                    <div class="flex flex-row items-center">
+                        <span class="text-2xl">2</span>
+                        <svg class="h-9 w-9 ml-2" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="yellow"2>
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <div class="h-7 w-64 ml-2 bg-gray-200 rounded-lg overflow-hidden">
+                            <div class="h-7 bg-yellow-500" style="width:<?= $rateTwoPercentage.'%'; ?>"></div>
+                        </div>
+                        <span class="ml-2 text-2xl">(<?=  $rateTwo ; ?>)</span>
                     </div>
-                    <div class="flex flex-row">
-                        <span class="text-xl">1</span><img class="h-7 w-7" src="img/stars.svg">
+                    <div class="flex flex-row items-center">
+                        <span class="text-2xl">1</span>
+                        <svg class="h-9 w-9 ml-2" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="yellow"2>
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <div class="h-7 w-64 ml-2 bg-gray-200 rounded-lg overflow-hidden">
+                            <div class="h-7 bg-yellow-500" style="width:<?= $rateOnePercentage.'%'; ?>"></div>
+                        </div>
+                        <span class="ml-2 text-2xl">(<?=  $rateOne ; ?>)</span>
                     </div>
                 </div>
                 
