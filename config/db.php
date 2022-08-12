@@ -17,7 +17,7 @@ $db = new PDO('mysql:host='.DB_HOST.';port=3306;dbname='.DB_NAME, DB_USER, DB_PA
 } catch (Exception $exception) {
     // var_dump($exception);
     echo '<h1>'.$exception->getMessage().'<h1>';
-    echo '<a href="https://www.google.fr/search?q='.$excception->getMessage().'">Recherche Google</a>';
+    echo '<a href="https://www.google.fr/search?q='.$exception->getMessage().'">Recherche Google</a>';
     die; // ou exit, pas de différences. On arrête le code PHP
 }
 ?>

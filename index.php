@@ -16,38 +16,43 @@
         // $formatter = IntlDateFormatter::create('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::FULL);
         // $formatter->setPattern('cccc dd MMMM Y');
 
-        $users = [
-            // [
-            //     'name' => $db->query('SELECT * FROM review WHERE name'),
-            //     'rate' => $db->query('SELECT * FROM review WHERE rate'),
-            //     'comment' => $db->query('SELECT * FROM review WHERE review')
-            //     'date' => => $db->query('SELECT * FROM review WHERE created_at')
-            // ],
-            [
-                'name' => 'Fiorella Mota',
-                'rate' => 5,
-                'comment' => 'Très bon restaurant',
-                'date' => '2022-02-09 11:43:12',
-            ],
-            [
-                'name' => 'Marina Mota',
-                'rate' => 4,
-                'comment' => 'Super restaurant',
-                'date' => '2022-02-04 08:12:12',
-            ],
-            [
-                'name' => 'Matthieu Mota',
-                'rate' => 3,
-                'comment' => 'Mauvais restaurant',
-                'date' => '2022-02-06 06:23:12',
-            ],
-            [
-                'name' => 'Sam Double',
-                'rate' => 4,
-                'comment' => 'Plutôt bon',
-                'date' => '2022-05-21 21:54:12',
-            ],
-        ];
+        $query = $db->query('SELECT * FROM review');
+
+        $users = $query->fetchall();
+
+
+        // $users = [
+        //     [
+        //         'name' => $db->query('SELECT * FROM review WHERE name')->fetch(),
+        //         'rate' => $db->query('SELECT * FROM review WHERE rate')->fetch(),
+        //         'comment' => $db->query('SELECT * FROM review WHERE review')->fetch(),
+        //         'date' => $db->query('SELECT * FROM review WHERE created_at')->fetch(),
+        //     ],
+        //     [
+        //         'name' => 'Fiorella Mota',
+        //         'rate' => 5,
+        //         'comment' => 'Très bon restaurant',
+        //         'date' => '2022-02-09 11:43:12',
+        //     ],
+        //     [
+        //         'name' => 'Marina Mota',
+        //         'rate' => 4,
+        //         'comment' => 'Super restaurant',
+        //         'date' => '2022-02-04 08:12:12',
+        //     ],
+        //     [
+        //         'name' => 'Matthieu Mota',
+        //         'rate' => 3,
+        //         'comment' => 'Mauvais restaurant',
+        //         'date' => '2022-02-06 06:23:12',
+        //     ],
+        //     [
+        //         'name' => 'Sam Double',
+        //         'rate' => 4,
+        //         'comment' => 'Plutôt bon',
+        //         'date' => '2022-05-21 21:54:12',
+        //     ],
+        // ];
 
         $rateSum = 0;
         $divisor = 0;
@@ -61,6 +66,9 @@
         foreach ($users as $index => $user) {
             $rateSum += $user['rate'];            
         };
+        // foreach ($users as $index => $user) {
+        //     $rateSum = $rateSum + $user['rate'];            
+        // };
 
         foreach ($users as $index => $user) {
             if ($user['rate'] == 5) {
@@ -144,7 +152,23 @@
         }
 
 
-        // commit
+        function dateTranslation($reviewDate) {
+            $date = date('l j F Y à H\hi', strtotime($reviewDate));
+
+            $date = str_replace(
+                ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
+                $date
+            );
+
+            $date = str_replace(
+                ['January', 'Febvuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                $date
+            );
+
+            return $date;
+        }
     ?>
 
     <div class="contains w-4/5 mx-auto"> <!-- Container -->
@@ -309,8 +333,8 @@
 
                 <div class="w-full flex flex-row items-center"> <!-- Div encadré commentaire -->         
                     
-                    <div class="w-48"> <!-- Partie Avatar -->
-                        <span class="bg-green-600 text-white rounded-full p-8"><?= $avatar; ?></span>
+                    <div class="w-48 text-center rounded-full"> <!-- Partie Avatar -->
+                        <span class="w-48 h-48 bg-green-600 text-6xl text-white p-3 rounded-full"><?= $avatar; ?></span>
                     </div>
 
                     <div class="w-full flex flex-col my-6"> <!-- Partie commentaire -->                    
@@ -343,12 +367,12 @@
                                 </svg>
 
                             </p>
-                            <p><?= $user['comment']; ?></p>
+                            <p><?= $user['review']; ?></p>
                         </div>
                         
                         <div class="w-full bg-gray-100 border-b p-2 flex justify-end"> <!-- Date -->
                             <?php 
-                                echo $user['date'];
+                                echo dateTranslation($user['created_at']);
                             ?>
                         </div>                   
                     
