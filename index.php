@@ -115,22 +115,22 @@
         if (!empty($_POST)) {
 
             if (empty($name)) {
-                $errors = 'Veuillez entrer un nom svp.';
+                $errors[] = 'Veuillez entrer un nom svp.';
             }
 
             if (empty($rate)) {
-                $errors = 'Veuillez entrer une note svp.';
+                $errors[] = 'Veuillez entrer une note svp.';
             }
 
             if (empty($comment)) {
-                $errors = 'Entrez un avis svp.';
+                $errors[] = 'Entrez un avis svp.';
             }
 
             $success = true;
         }
 
-        if (empty($errors)) {
-            $success = true;
+        if (empty($errors) && $success) {
+            // $success = true;
 
             $query = $db->prepare('INSERT INTO review (name, rate, review, created_at)
             VALUES (:name, :rate, :comment, :date)');
@@ -280,17 +280,21 @@
                     <button class="bg-blue-400 hover:bg-blue-200 duration-300 text-center text-white rounded p-2">Noter</button>
                 </div>
 
-                <!-- <?php if (!empty($errors)) { ?>
-                    <div class="my-3">
-                        
+                <?php if (!empty($errors)) { ?>
+                    <div class=" w-2/3 my-3 bg-red-200 border-lg rounded-lg text-black text-center p-3">
                             <?php foreach ($errors as $error) { ?>
-                                <ul>
-                                    <li><?= $error; ?></li>
-                                </ul>
+                                <ul>                             
+                                    <li><?= $error; ?></li>  
+                            </ul>                              
                             <?php } ?>
-                        
                     </div>
-                <?php } ?> -->
+                <?php } ?>
+
+                <?php if ($success && empty($errors)) { ?>
+                    <div class="w-2/3 my-3 bg-green-200 border-lg rounded-lg text-black text-center p-3">
+                        <p>Votre commentaire a bien été envoyé.</p>
+                    </div>
+                <?php } ?>
                    
 
             </form>
